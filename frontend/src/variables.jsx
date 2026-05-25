@@ -1,10 +1,10 @@
 // This file serves as a central place to manage and export all static assets and variables used across the website. By importing assets here and exporting them, we can easily maintain and update our resources without having to change import paths throughout the codebase.
 
 // photos
-export { default as heroPhoto } from './assets/images/DSC_8736.jpg';
-export { default as whatPhoto } from './assets/images/Heavy-Shrug_8_BW.jpg';
-export { default as aboutPhoto } from './assets/images/about.jpg';
-export { default as contactPhoto } from './assets/images/hero.jpg';
+export { default as heroPhoto } from './assets/images/DSC_8736.webp';
+export { default as whatPhoto } from './assets/images/Heavy-Shrug_8_BW.webp';
+export { default as aboutPhoto } from './assets/images/about.webp';
+export { default as contactPhoto } from './assets/images/hero.webp';
 
 
 // background
