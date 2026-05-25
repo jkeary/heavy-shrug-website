@@ -26,3 +26,4 @@ backend/.venv/
 .DS_Store
 .vscode/
 *.swp
+.claude/
