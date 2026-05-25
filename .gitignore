@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Build output
+frontend/dist/
+
+# Large media files — served from Cloudflare R2
+frontend/public/music/
+frontend/public/artwork/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Python / Django
+backend/__pycache__/
+backend/**/__pycache__/
+**/*.pyc
+backend/db.sqlite3
+venv/
+backend/.venv/
+
+# Editor / OS
+.DS_Store
+.vscode/
+*.swp

@@ -1,0 +1,196 @@
+import { useState } from 'react'
+import styled from 'styled-components'
+import { contactPhoto } from '../variables'
+import MyButton from '../components/Button'
+
+const BAND_EMAIL = 'heavyshrug@gmail.com'
+
+export default function Contact() {
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [status, setStatus] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  function handleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setLoading(true)
+    setStatus(null)
+    try {
+      const res = await fetch('https://formspree.io/f/xgoqlnrd', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error()
+      setStatus('success')
+      setForm({ name: '', email: '', message: '' })
+    } catch {
+      setStatus('error')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <Page>
+      <Container>
+        <PhotoWrap>
+          <Photo
+            src={contactPhoto}
+            alt="Heavy Shrug contact"
+            onError={(e) => { e.target.style.display = 'none' }}
+          />
+        </PhotoWrap>
+        <Content>
+          <Title>Book Us</Title>
+          <EmailLine>
+            Hit us up directly: <a href={`mailto:${BAND_EMAIL}`}>{BAND_EMAIL}</a>
+          </EmailLine>
+          <Form onSubmit={handleSubmit}>
+            <Input
+              type="text"
+              name="name"
+              placeholder="Your Name"
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+            <Textarea
+              name="message"
+              placeholder="Tell us about the show, venue, date..."
+              value={form.message}
+              onChange={handleChange}
+              required
+              rows={6}
+            />
+            <MyButton submit={true} disabled={loading} />
+          </Form>
+          {status === 'success' && <SuccessMsg>Message sent! We'll be in touch.</SuccessMsg>}
+          {status === 'error' && <ErrorMsg>Something went wrong. Email us directly.</ErrorMsg>}
+        </Content>
+      </Container>
+    </Page>
+  )
+}
+
+const Page = styled.main`
+  flex: 1;
+  padding: 3rem 2rem;
+`
+
+const Container = styled.div`
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`
+
+const PhotoWrap = styled.div`
+  flex: 0 0 460px;
+
+  @media (max-width: 768px) {
+    flex: unset;
+    width: 100%;
+  }
+`
+
+const Photo = styled.img`
+  width: 100%;
+  display: block;
+`
+
+const Content = styled.div`
+  flex: 1;
+`
+
+const Title = styled.h1`
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+  text-shadow:
+    3px 3px 0 rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(255, 107, 0, 0.3);
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+`
+
+const EmailLine = styled.p`
+  font-family: var(--font-heading-2);
+  font-size: 1.4rem;
+  color: #F5F0E8;
+  margin-bottom: 1.5rem;
+  text-shadow:
+    3px 3px 0 rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(255, 107, 0, 0.3);
+
+  a {
+    color: var(--orange-light);
+    font-weight: bold;
+  }
+`
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`
+
+const Input = styled.input`
+  font-family: var(--font-heading-2);
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: rgba(20, 28, 12);
+  border: 2px solid #6B7C3A;
+  border-radius: 2px;
+  color: #F5F0E8;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: var(--orange);
+  }
+
+  &::placeholder {
+    color: rgba(245, 240, 232, 0.4);
+  }
+`
+
+const Textarea = styled(Input).attrs({ as: 'textarea' })`
+  min-height: 150px;
+  resize: vertical;
+`
+
+const SuccessMsg = styled.p`
+  margin-top: 1rem;
+  color: #7ecf6a;
+  font-family: var(--font-heading-2);
+  font-size: 1.8rem;
+`
+
+const ErrorMsg = styled.p`
+  margin-top: 1rem;
+  color: #ff6b6b;
+  font-family: var(--font-heading-2);
+  font-size: 1.8rem;
+`
