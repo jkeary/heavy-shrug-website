@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "tracks": "node scripts/generate-tracks.js"
+    "tracks": "node scripts/generate-tracks.js",
+    "images": "node scripts/optimize-images.js"
   },
   "dependencies": {
     "react": "^19.2.6",

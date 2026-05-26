@@ -30,6 +30,16 @@ git push
 
 Vercel detects the push, builds the site, and deploys in ~30 seconds.
 
+## Adding new images
+
+Drop the JPG or PNG into `src/assets/images/`, then run:
+
+```bash
+npm run images
+```
+
+This converts everything to WebP at max 1920px wide and deletes the originals. Then update the import in `src/variables.jsx` to point to the new `.webp` file, commit, and push.
+
 ## Adding new songs
 
 Audio files live on Cloudflare R2, not in this repo. To add a new track:
