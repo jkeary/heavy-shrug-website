@@ -65,6 +65,7 @@ frontend/
 ├── public/              # Static assets (favicon, etc.)
 ├── scripts/
 │   └── generate-tracks.js   # Reads MP3 metadata, writes src/tracks.json
+|   └── optimize-images.js   # Optimizes image files for web, writes to src/assets/images/
 ├── src/
 │   ├── assets/          # Fonts and images (bundled by Vite)
 │   ├── components/      # Navbar, Footer, MusicPlayer, etc.
