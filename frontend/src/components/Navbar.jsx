@@ -32,7 +32,7 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2rem;
+  padding: 2.3rem 2rem;
   height: 64px;
   top: 0;
   z-index: 100;

@@ -27,7 +27,7 @@ const SubmitButton = styled.button`
   padding: 0.75rem 2rem;
   background-color: var(--orange);
   color: #0d1a07;
-  border: none;
+  border: 2px solid var(--orange);
   border-radius: 15px;
   cursor: pointer;
   align-self: flex-start;

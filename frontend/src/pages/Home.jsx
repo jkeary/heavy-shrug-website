@@ -1,49 +1,50 @@
-import { useEffect, useRef } from 'react'
-import styled from 'styled-components'
+import { useEffect, useRef } from "react";
+import styled from "styled-components";
 
-import SocialLinks from '../components/SocialLinks'
-import { heroPhoto, whatPhoto, shortBio } from '../variables'
-import MyButton from '../components/Button'
+import SocialLinks from "../components/SocialLinks";
+import PhotoCredit from "../components/PhotoCredit";
+import { heroPhoto, whatPhoto, shortBio } from "../variables";
+import MyButton from "../components/Button";
 
 export default function Home() {
-  const overlayRef = useRef(null)
-  const whoTitleRef = useRef(null)
+  const overlayRef = useRef(null);
+  const whoTitleRef = useRef(null);
 
   useEffect(() => {
-    let frame = null
+    let frame = null;
 
     const updateScrollMotion = () => {
       if (window.innerWidth <= 768) {
-        if (overlayRef.current) overlayRef.current.style.transform = 'none'
-        if (whoTitleRef.current) whoTitleRef.current.style.transform = 'none'
-        frame = null
-        return
+        if (overlayRef.current) overlayRef.current.style.transform = "none";
+        if (whoTitleRef.current) whoTitleRef.current.style.transform = "none";
+        frame = null;
+        return;
       }
-      const overlayOffset = Math.min(28, window.scrollY * 0.12)
-      const titleOffset = Math.max(0, 60 - window.scrollY * 0.16)
+      const overlayOffset = Math.min(28, window.scrollY * 0.12);
+      const titleOffset = Math.max(0, 60 - window.scrollY * 0.16);
 
       if (overlayRef.current) {
-        overlayRef.current.style.transform = `translateX(${overlayOffset}px)`
+        overlayRef.current.style.transform = `translateX(${overlayOffset}px)`;
       }
       if (whoTitleRef.current) {
-        whoTitleRef.current.style.transform = `translateX(${titleOffset}px)`
+        whoTitleRef.current.style.transform = `translateX(${titleOffset}px)`;
       }
-      frame = null
-    }
+      frame = null;
+    };
 
     const handleScroll = () => {
       if (frame === null) {
-        frame = requestAnimationFrame(updateScrollMotion)
+        frame = requestAnimationFrame(updateScrollMotion);
       }
-    }
+    };
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    updateScrollMotion()
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    updateScrollMotion();
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-      if (frame !== null) cancelAnimationFrame(frame)
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return (
     <Main>
@@ -55,38 +56,64 @@ export default function Home() {
             Shrug <Italic>Nation</Italic>
           </HeroTitle>
         </HeroOverlay>
-        <HeroImg
-          src={heroPhoto}
-          alt="Heavy Shrug band photo"
-          onError={(e) => { e.target.style.display = 'none' }}
-        />
+        <HeroMedia>
+          <HeroImg
+            src={heroPhoto}
+            alt="Heavy Shrug band photo"
+            onError={(e) => {
+              e.target.style.display = "none";
+            }}
+          />
+          <PhotoCredit>
+            Photo by{" "}
+            <a
+              href="https://molemanmedia.mypixieset.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mol White
+            </a>
+          </PhotoCredit>
+        </HeroMedia>
       </HeroSection>
 
       <WhoSection>
         <WhoContent>
           <WhoTitle ref={whoTitleRef}>What even are we?</WhoTitle>
           <WhoBio dangerouslySetInnerHTML={{ __html: shortBio }} />
-          <MyButton to="/about" name='Read More'></MyButton>
+          <MyButton to="/about" name="Read More"></MyButton>
         </WhoContent>
         <WhoPhotoWrap>
           <WhoPhoto
             src={whatPhoto}
             alt="Heavy Shrug band"
-            onError={(e) => { e.target.style.display = 'none' }}
+            onError={(e) => {
+              e.target.style.display = "none";
+            }}
           />
+          <PhotoCredit>
+            Photo by{" "}
+            <a
+              href="https://www.instagram.com/tam_stockton/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Tam Stockton
+            </a>
+          </PhotoCredit>
         </WhoPhotoWrap>
       </WhoSection>
 
       <SocialLinks />
     </Main>
-  )
+  );
 }
 
 const Main = styled.main`
   display: flex;
   flex-direction: column;
   flex: 1;
-`
+`;
 
 const HeroSection = styled.section`
   position: relative;
@@ -102,20 +129,25 @@ const HeroSection = styled.section`
     min-height: auto;
     padding: 2rem 1.5rem;
   }
-`
+`;
 
-const HeroImg = styled.img`
+const HeroMedia = styled.div`
   width: 65%;
   max-width: 1200px;
+  display: block;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+const HeroImg = styled.img`
+  width: 100%;
+  height: auto;
   object-fit: cover;
   object-position: center;
   display: block;
   /* filter: grayscale(100%) contrast(1.1) brightness(0.85); */
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`
+`;
 
 const HeroOverlay = styled.div`
   position: absolute;
@@ -136,7 +168,7 @@ const HeroOverlay = styled.div`
     margin-bottom: 1.5rem;
     pointer-events: auto;
   }
-`
+`;
 
 const HeroTitle = styled.h1`
   font-family: var(--font-heading);
@@ -146,11 +178,12 @@ const HeroTitle = styled.h1`
   letter-spacing: 0.05em;
   margin: 0;
   line-height: 1.05;
-`
+`;
 
 const Italic = styled.span`
   font-style: italic;
-`
+`;
+
 const WhoSection = styled.section`
   position: relative;
   display: flex;
@@ -162,7 +195,7 @@ const WhoSection = styled.section`
     padding: 2.5rem 1.5rem;
   }
   background: rgba(20, 28, 12, 0.6);
-`
+`;
 
 const WhoContent = styled.div`
   flex: 0 0 60%;
@@ -180,7 +213,7 @@ const WhoContent = styled.div`
     margin-right: 0;
     z-index: auto;
   }
-`
+`;
 
 const WhoTitle = styled.h2`
   font-family: var(--font-heading);
@@ -194,12 +227,12 @@ const WhoTitle = styled.h2`
   margin: 0;
   transform: translateX(32px);
   will-change: transform;
-`
+`;
 
 const WhoBio = styled.p`
   font-size: 1.4rem;
   line-height: 1.8;
-  color: #F5F0E8;
+  color: #f5f0e8;
   text-shadow:
     3px 3px 0 rgba(0, 0, 0, 0.8),
     0 0 20px rgba(255, 107, 0, 0.3);
@@ -207,7 +240,7 @@ const WhoBio = styled.p`
   @media (max-width: 768px) {
     font-size: 1.1rem;
   }
-`
+`;
 
 const WhoPhotoWrap = styled.div`
   /* reduce flex-basis slightly so the photo doesn't butt against the right edge
@@ -219,10 +252,10 @@ const WhoPhotoWrap = styled.div`
     flex: unset;
     width: 100%;
   }
-`
+`;
 
 const WhoPhoto = styled.img`
   width: 100%;
   display: block;
   /* filter: grayscale(100%) contrast(1.1) brightness(0.85); */
-`
+`;

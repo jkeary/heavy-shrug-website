@@ -1,36 +1,40 @@
-import { useState } from 'react'
-import styled from 'styled-components'
-import { contactPhoto } from '../variables'
-import MyButton from '../components/Button'
+import { useState } from "react";
+import styled from "styled-components";
+import { contactPhoto } from "../variables";
+import PhotoCredit from "../components/PhotoCredit";
+import MyButton from "../components/Button";
 
-const BAND_EMAIL = 'heavyshrug@gmail.com'
+const BAND_EMAIL = "heavyshrug@gmail.com";
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
-  const [status, setStatus] = useState(null)
-  const [loading, setLoading] = useState(false)
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value })
+    setForm({ ...form, [e.target.name]: e.target.value });
   }
 
   async function handleSubmit(e) {
-    e.preventDefault()
-    setLoading(true)
-    setStatus(null)
+    e.preventDefault();
+    setLoading(true);
+    setStatus(null);
     try {
-      const res = await fetch('https://formspree.io/f/xgoqlnrd', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      const res = await fetch("https://formspree.io/f/xgoqlnrd", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify(form),
-      })
-      if (!res.ok) throw new Error()
-      setStatus('success')
-      setForm({ name: '', email: '', message: '' })
+      });
+      if (!res.ok) throw new Error();
+      setStatus("success");
+      setForm({ name: "", email: "", message: "" });
     } catch {
-      setStatus('error')
+      setStatus("error");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -41,13 +45,26 @@ export default function Contact() {
           <Photo
             src={contactPhoto}
             alt="Heavy Shrug contact"
-            onError={(e) => { e.target.style.display = 'none' }}
+            onError={(e) => {
+              e.target.style.display = "none";
+            }}
           />
+          <PhotoCredit>
+            Photo by{" "}
+            <a
+              href="https://www.instagram.com/wrangler_jeans/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Derek Farr
+            </a>
+          </PhotoCredit>
         </PhotoWrap>
         <Content>
           <Title>Book Us</Title>
           <EmailLine>
-            Hit us up directly: <a href={`mailto:${BAND_EMAIL}`}>{BAND_EMAIL}</a>
+            Hit us up directly:{" "}
+            <a href={`mailto:${BAND_EMAIL}`}>{BAND_EMAIL}</a>
           </EmailLine>
           <Form onSubmit={handleSubmit}>
             <Input
@@ -76,18 +93,22 @@ export default function Contact() {
             />
             <MyButton submit={true} disabled={loading} />
           </Form>
-          {status === 'success' && <SuccessMsg>Message sent! We'll be in touch.</SuccessMsg>}
-          {status === 'error' && <ErrorMsg>Something went wrong. Email us directly.</ErrorMsg>}
+          {status === "success" && (
+            <SuccessMsg>Message sent! We'll be in touch.</SuccessMsg>
+          )}
+          {status === "error" && (
+            <ErrorMsg>Something went wrong. Email us directly.</ErrorMsg>
+          )}
         </Content>
       </Container>
     </Page>
-  )
+  );
 }
 
 const Page = styled.main`
   flex: 1;
   padding: 3rem 2rem;
-`
+`;
 
 const Container = styled.div`
   max-width: 1000px;
@@ -99,7 +120,7 @@ const Container = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
   }
-`
+`;
 
 const PhotoWrap = styled.div`
   flex: 0 0 460px;
@@ -108,16 +129,16 @@ const PhotoWrap = styled.div`
     flex: unset;
     width: 100%;
   }
-`
+`;
 
 const Photo = styled.img`
   width: 100%;
   display: block;
-`
+`;
 
 const Content = styled.div`
   flex: 1;
-`
+`;
 
 const Title = styled.h1`
   font-family: var(--font-heading);
@@ -133,12 +154,12 @@ const Title = styled.h1`
   @media (max-width: 768px) {
     font-size: 2rem;
   }
-`
+`;
 
 const EmailLine = styled.p`
   font-family: var(--font-heading-2);
   font-size: 1.4rem;
-  color: #F5F0E8;
+  color: #f5f0e8;
   margin-bottom: 1.5rem;
   text-shadow:
     3px 3px 0 rgba(0, 0, 0, 0.8),
@@ -148,22 +169,22 @@ const EmailLine = styled.p`
     color: var(--orange-light);
     font-weight: bold;
   }
-`
+`;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-`
+`;
 
 const Input = styled.input`
   font-family: var(--font-heading-2);
   font-size: 1rem;
   padding: 0.75rem 1rem;
   background-color: rgba(20, 28, 12);
-  border: 2px solid #6B7C3A;
+  border: 2px solid #6b7c3a;
   border-radius: 2px;
-  color: #F5F0E8;
+  color: #f5f0e8;
   outline: none;
   transition: border-color 0.2s;
 
@@ -174,23 +195,23 @@ const Input = styled.input`
   &::placeholder {
     color: rgba(245, 240, 232, 0.4);
   }
-`
+`;
 
-const Textarea = styled(Input).attrs({ as: 'textarea' })`
+const Textarea = styled(Input).attrs({ as: "textarea" })`
   min-height: 150px;
   resize: vertical;
-`
+`;
 
 const SuccessMsg = styled.p`
   margin-top: 1rem;
   color: #7ecf6a;
   font-family: var(--font-heading-2);
   font-size: 1.8rem;
-`
+`;
 
 const ErrorMsg = styled.p`
   margin-top: 1rem;
   color: #ff6b6b;
   font-family: var(--font-heading-2);
   font-size: 1.8rem;
-`
+`;

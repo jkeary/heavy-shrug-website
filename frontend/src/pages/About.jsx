@@ -1,22 +1,36 @@
-import styled from 'styled-components'
-import { aboutPhoto, longBio } from '../variables'
+import styled from "styled-components";
+import PhotoCredit from "../components/PhotoCredit";
+import { aboutPhoto, longBio } from "../variables";
 
 export default function About() {
   return (
     <Page>
       <Container>
         <Title>About The Shrug</Title>
-        <Photo
-          src={aboutPhoto}
-          alt="Heavy Shrug band"
-          onError={(e) => { e.target.style.display = 'none' }}
-        />
+        <FigureWrap>
+          <Photo
+            src={aboutPhoto}
+            alt="Heavy Shrug band"
+            onError={(e) => {
+              e.target.style.display = "none";
+            }}
+          />
+          <PhotoCredit>
+            Photo by{" "}
+            <a
+              href="https://molemanmedia.mypixieset.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mol White
+            </a>
+          </PhotoCredit>
+        </FigureWrap>
         <Bio dangerouslySetInnerHTML={{ __html: longBio }} />
       </Container>
     </Page>
-  )
+  );
 }
-
 
 const Page = styled.main`
   flex: 1;
@@ -26,15 +40,15 @@ const Page = styled.main`
   @media (max-width: 640px) {
     padding: 2rem 1.25rem;
   }
-`
+`;
 
 const Container = styled.div`
   max-width: 1000px;
   margin: 0 auto;
   display: flow-root;
-`
+`;
 
-const Photo = styled.img`
+const FigureWrap = styled.div`
   float: left;
   width: 55%;
   margin: 0.5rem 2.5rem 1.5rem 0;
@@ -46,7 +60,12 @@ const Photo = styled.img`
     max-width: 100%;
     margin: 0 0 1.5rem 0;
   }
-`
+`;
+
+const Photo = styled.img`
+  width: 100%;
+  display: block;
+`;
 
 const Title = styled.h1`
   font-family: var(--font-heading);
@@ -62,7 +81,7 @@ const Title = styled.h1`
   @media (max-width: 768px) {
     font-size: 2rem;
   }
-`
+`;
 
 const Bio = styled.p`
   font-family: var(--font-body);
@@ -77,4 +96,4 @@ const Bio = styled.p`
   @media (max-width: 640px) {
     font-size: 1.2rem;
   }
-`
+`;
