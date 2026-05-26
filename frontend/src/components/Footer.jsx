@@ -1,12 +1,16 @@
+import { useLocation } from 'react-router-dom'
 import MyButton from './Button'
 import styled from 'styled-components'
 
 export default function Footer() {
+  const { pathname } = useLocation()
   const BAND_EMAIL = 'heavyshrug@gmail.com'
+  const showContactButton = pathname !== '/contact'
+
   return (
     <FooterBar>
       <Label>Email for Booking</Label>
-      <MyButton to="/contact" name="Contact Us" />
+      {showContactButton && <MyButton to="/contact" name="Contact Us" />}
       <EmailLink href={`mailto:${BAND_EMAIL}`}>heavyshrug@gmail.com</EmailLink>
     </FooterBar>
   )
