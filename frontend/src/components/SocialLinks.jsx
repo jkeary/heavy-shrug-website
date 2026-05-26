@@ -35,12 +35,18 @@ const Heading = styled.h2`
   margin-bottom: 3.3rem;
   text-align: center;
   align-self: center;
+
+  @media (max-width: 640px) {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
 `
 
 const Grid = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+  justify-content: center;
 `
 
 // const SocialButton = styled.a`

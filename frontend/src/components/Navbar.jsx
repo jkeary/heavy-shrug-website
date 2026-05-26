@@ -37,6 +37,11 @@ const Nav = styled.nav`
   top: 0;
   z-index: 100;
   background: rgba(20, 28, 12, 0.6);
+
+  @media (max-width: 640px) {
+    padding: 0 1rem;
+    height: 56px;
+  }
 `;
 
 const Brand = styled.div`

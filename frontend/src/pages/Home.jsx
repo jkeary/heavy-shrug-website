@@ -13,6 +13,12 @@ export default function Home() {
     let frame = null
 
     const updateScrollMotion = () => {
+      if (window.innerWidth <= 768) {
+        if (overlayRef.current) overlayRef.current.style.transform = 'none'
+        if (whoTitleRef.current) whoTitleRef.current.style.transform = 'none'
+        frame = null
+        return
+      }
       const overlayOffset = Math.min(28, window.scrollY * 0.12)
       const titleOffset = Math.max(0, 60 - window.scrollY * 0.16)
 
@@ -90,6 +96,12 @@ const HeroSection = styled.section`
   align-items: center;
   justify-content: center;
   padding: 3rem 2rem 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    min-height: auto;
+    padding: 2rem 1.5rem;
+  }
 `
 
 const HeroImg = styled.img`
@@ -99,6 +111,10 @@ const HeroImg = styled.img`
   object-position: center;
   display: block;
   /* filter: grayscale(100%) contrast(1.1) brightness(0.85); */
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `
 
 const HeroOverlay = styled.div`
@@ -187,6 +203,10 @@ const WhoBio = styled.p`
   text-shadow:
     3px 3px 0 rgba(0, 0, 0, 0.8),
     0 0 20px rgba(255, 107, 0, 0.3);
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
 `
 
 const WhoPhotoWrap = styled.div`

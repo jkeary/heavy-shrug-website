@@ -20,6 +20,14 @@ const FooterBar = styled.footer`
   font-family: var(--font-heading-2);
   font-size: 1rem;
   background: rgba(20, 28, 12, 0.6);
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1rem;
+    text-align: center;
+  }
 `
 
 const Label = styled.span`

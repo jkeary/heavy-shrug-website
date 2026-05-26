@@ -22,6 +22,10 @@ const Page = styled.main`
   flex: 1;
   padding: 3rem 2rem;
   background: rgba(20, 28, 12, 0.6);
+
+  @media (max-width: 640px) {
+    padding: 2rem 1.25rem;
+  }
 `
 
 const Container = styled.div`
@@ -69,4 +73,8 @@ const Bio = styled.p`
   text-shadow:
     3px 3px 0 rgba(0, 0, 0, 0.8),
     0 0 20px rgba(255, 107, 0, 0.3);
+
+  @media (max-width: 640px) {
+    font-size: 1.2rem;
+  }
 `
