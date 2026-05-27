@@ -15,6 +15,17 @@ const fmt = (secs) => {
   return `${m}:${s}`;
 };
 
+function buildShuffleQueue(excludeIdx) {
+  const indices = Array.from({ length: TRACKS.length }, (_, i) => i).filter(
+    (i) => i !== excludeIdx
+  );
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  return indices;
+}
+
 export default function MusicPlayer() {
   const [isOpen, setIsOpen] = useState(() =>
     typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
@@ -24,8 +35,12 @@ export default function MusicPlayer() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [shuffle, setShuffle] = useState(false);
+  const [shuffleQueue, setShuffleQueue] = useState([]);
   const [artExpanded, setArtExpanded] = useState(false);
   const audioRef = useRef(null);
+  const indexRef = useRef(0);
+
+  useEffect(() => { indexRef.current = index; }, [index]);
 
   const track = TRACKS[index];
 
@@ -38,15 +53,15 @@ export default function MusicPlayer() {
   }, [index]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const nextTrack = useCallback(() => {
-    setIndex((i) => {
-      if (shuffle) {
-        let n;
-        do {
-          n = Math.floor(Math.random() * TRACKS.length);
-        } while (n === i && TRACKS.length > 1);
-        return n;
-      }
-      return (i + 1) % TRACKS.length;
+    if (!shuffle) {
+      setIndex((i) => (i + 1) % TRACKS.length);
+      return;
+    }
+    setShuffleQueue((queue) => {
+      const remaining = queue.length > 0 ? queue : buildShuffleQueue(indexRef.current);
+      const [next, ...rest] = remaining;
+      setIndex(next);
+      return rest;
     });
   }, [shuffle]);
 
@@ -74,6 +89,15 @@ export default function MusicPlayer() {
   const selectTrack = (i) => {
     setIndex(i);
     setIsPlaying(true);
+    if (shuffle) setShuffleQueue(buildShuffleQueue(i));
+  };
+
+  const toggleShuffle = () => {
+    setShuffle((v) => {
+      if (!v) setShuffleQueue(buildShuffleQueue(indexRef.current));
+      else setShuffleQueue([]);
+      return !v;
+    });
   };
 
   const handleSeek = (e) => {
@@ -156,7 +180,7 @@ export default function MusicPlayer() {
           </CtrlBtn>
           <ShuffleBtn
             $active={shuffle}
-            onClick={() => setShuffle((v) => !v)}
+            onClick={toggleShuffle}
             title="Shuffle"
           >
             ⇌
