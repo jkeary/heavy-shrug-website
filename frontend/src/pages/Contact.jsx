@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { contactPhoto } from "../variables";
 import PhotoCredit from "../components/PhotoCredit";
+import MyButton from "../components/Button";
 
 const BAND_EMAIL = "heavyshrug@gmail.com";
 
@@ -90,9 +91,7 @@ export default function Contact() {
               required
               rows={6}
             />
-            <SubmitButton type="submit" disabled={loading}>
-              {loading ? "Sending..." : "Send It"}
-            </SubmitButton>
+            <MyButton submit={true} disabled={loading} />
           </Form>
           {status === "success" && (
             <SuccessMsg>Message sent! We'll be in touch.</SuccessMsg>
@@ -201,43 +200,6 @@ const Input = styled.input`
 const Textarea = styled(Input).attrs({ as: "textarea" })`
   min-height: 150px;
   resize: vertical;
-`;
-
-const SubmitButton = styled.button`
-  font-family: var(--font-heading);
-  font-size: 1.3rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 0.75rem 2rem;
-  background-color: var(--orange);
-  color: #0d1a07;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  align-self: flex-start;
-  transition:
-    background-color 0.2s,
-    color 0.2s,
-    border-color 0.2s,
-    transform 0.15s,
-    box-shadow 0.15s;
-
-  &:hover {
-    background-color: #0d1a07;
-    color: var(--orange);
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  @media (max-width: 768px) {
-    width: 100%;
-    text-align: center;
-  }
 `;
 
 const SuccessMsg = styled.p`
