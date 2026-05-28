@@ -15,6 +15,10 @@ const fmt = (secs) => {
   return `${m}:${s}`;
 };
 
+function buildSequentialQueue(fromIdx) {
+  return Array.from({ length: TRACKS.length }, (_, i) => i).filter(i => i > fromIdx);
+}
+
 function buildShuffleQueue(excludeIdx) {
   const indices = Array.from({ length: TRACKS.length }, (_, i) => i).filter(
     (i) => i !== excludeIdx
@@ -31,20 +35,27 @@ export default function MusicPlayer() {
     typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
   );
   const [index, setIndex] = useState(0);
+  const [queue, setQueueState] = useState(() => buildSequentialQueue(0));
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [shuffle, setShuffle] = useState(false);
-  const [shuffleQueue, setShuffleQueue] = useState([]);
   const [artExpanded, setArtExpanded] = useState(false);
   const audioRef = useRef(null);
   const indexRef = useRef(0);
+  const shuffleRef = useRef(false);
+  const queueRef = useRef(buildSequentialQueue(0));
+
+  function setQueue(newQ) {
+    queueRef.current = newQ;
+    setQueueState(newQ);
+  }
 
   useEffect(() => { indexRef.current = index; }, [index]);
+  useEffect(() => { shuffleRef.current = shuffle; }, [shuffle]);
 
   const track = TRACKS[index];
 
-  // Load new track whenever index changes; resume if already playing
   useEffect(() => {
     const a = audioRef.current;
     if (!a) return;
@@ -53,50 +64,55 @@ export default function MusicPlayer() {
   }, [index]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const nextTrack = useCallback(() => {
-    if (!shuffle) {
-      setIndex((i) => (i + 1) % TRACKS.length);
+    const q = queueRef.current;
+    if (q.length === 0) {
+      if (shuffleRef.current) {
+        const newQ = buildShuffleQueue(indexRef.current);
+        const [next, ...rest] = newQ;
+        indexRef.current = next;
+        setIndex(next);
+        queueRef.current = rest;
+        setQueueState(rest);
+        setIsPlaying(true);
+      }
+      // non-shuffle and queue exhausted: stop
       return;
     }
-    setShuffleQueue((queue) => {
-      const remaining = queue.length > 0 ? queue : buildShuffleQueue(indexRef.current);
-      const [next, ...rest] = remaining;
-      setIndex(next);
-      return rest;
-    });
-  }, [shuffle]);
+    const [next, ...rest] = q;
+    indexRef.current = next;
+    setIndex(next);
+    queueRef.current = rest;
+    setQueueState(rest);
+    setIsPlaying(true);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const prevTrack = () => {
     const a = audioRef.current;
-    if (a && a.currentTime > 3) {
-      a.currentTime = 0;
-      return;
-    }
-    setIndex((i) => (i - 1 + TRACKS.length) % TRACKS.length);
+    if (a && a.currentTime > 3) { a.currentTime = 0; return; }
+    const prev = (index - 1 + TRACKS.length) % TRACKS.length;
+    setIndex(prev);
+    setQueue(shuffleRef.current ? buildShuffleQueue(prev) : buildSequentialQueue(prev));
   };
 
   const togglePlay = () => {
     const a = audioRef.current;
     if (!a) return;
-    if (isPlaying) {
-      a.pause();
-      setIsPlaying(false);
-    } else {
-      a.play().catch(() => {});
-      setIsPlaying(true);
-    }
+    if (isPlaying) { a.pause(); setIsPlaying(false); }
+    else { a.play().catch(() => {}); setIsPlaying(true); }
   };
 
   const selectTrack = (i) => {
     setIndex(i);
     setIsPlaying(true);
-    if (shuffle) setShuffleQueue(buildShuffleQueue(i));
+    setQueue(shuffleRef.current ? buildShuffleQueue(i) : buildSequentialQueue(i));
   };
 
   const toggleShuffle = () => {
-    setShuffle((v) => {
-      if (!v) setShuffleQueue(buildShuffleQueue(indexRef.current));
-      else setShuffleQueue([]);
-      return !v;
+    setShuffle(v => {
+      const next = !v;
+      shuffleRef.current = next;
+      setQueue(next ? buildShuffleQueue(indexRef.current) : buildSequentialQueue(indexRef.current));
+      return next;
     });
   };
 
