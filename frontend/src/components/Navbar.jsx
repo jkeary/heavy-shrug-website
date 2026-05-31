@@ -76,8 +76,8 @@ const StyledNavLink = styled(NavLink)`
   padding: 0.25rem 0.5rem;
   border-bottom: 3px solid transparent;
   transition:
-    color 0.2s,
-    border-color 0.2s;
+    color 0.8s,
+    border-color 0.8s;
   text-shadow:
     3px 3px 0 rgba(0, 0, 0, 0.8),
     0 0 30px rgba(255, 107, 0, 0.4);

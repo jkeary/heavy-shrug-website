@@ -152,7 +152,8 @@ const Title = styled.h1`
     0 0 20px rgba(255, 107, 0, 0.3);
 
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: var(--mobile-header-title-font);
+    text-align: center;
   }
 `;
 

@@ -16,7 +16,10 @@ export default function Home() {
     const updateScrollMotion = () => {
       if (window.innerWidth <= 768) {
         if (overlayRef.current) overlayRef.current.style.transform = "none";
-        if (whoTitleRef.current) whoTitleRef.current.style.transform = "none";
+        if (whoTitleRef.current) {
+          whoTitleRef.current.style.transform = "none";
+          whoTitleRef.current.style.opacity = "1";
+        }
         frame = null;
         return;
       }
@@ -28,6 +31,21 @@ export default function Home() {
       }
       if (whoTitleRef.current) {
         whoTitleRef.current.style.transform = `translateX(${titleOffset}px)`;
+        
+        // Calculate opacity based on visibility
+        const rect = whoTitleRef.current.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const fadeStart = windowHeight * 0.9;
+        const fadeEnd = windowHeight * 0.4;
+
+        if (rect.top > fadeStart) {
+          whoTitleRef.current.style.opacity = "0";
+        } else if (rect.top <= fadeEnd) {
+          whoTitleRef.current.style.opacity = "1";
+        } else {
+          const progress = 1 - (rect.top - fadeEnd) / (fadeStart - fadeEnd);
+          whoTitleRef.current.style.opacity = `${Math.min(1, Math.max(0, progress))}`;
+        }
       }
       frame = null;
     };
@@ -81,7 +99,9 @@ export default function Home() {
         <WhoContent>
           <WhoTitle ref={whoTitleRef}>What even are we?</WhoTitle>
           <WhoBio dangerouslySetInnerHTML={{ __html: shortBio }} />
-          <MyButton to="/about" name="Read More"></MyButton>
+          <ButtonWrap>
+            <MyButton to="/about" name="Read More" />
+          </ButtonWrap>
         </WhoContent>
         <WhoPhotoWrap>
           <WhoPhoto
@@ -178,6 +198,10 @@ const HeroTitle = styled.h1`
   letter-spacing: 0.05em;
   margin: 0;
   line-height: 1.05;
+
+  @media (max-width: 768px) {
+    font-size: var(--mobile-header-title-font);
+  }
 `;
 
 const Italic = styled.span`
@@ -226,7 +250,16 @@ const WhoTitle = styled.h2`
     0 0 20px rgba(255, 107, 0, 0.3);
   margin: 0;
   transform: translateX(32px);
-  will-change: transform;
+  opacity: 0;
+  transition: opacity 0.35s ease-out;
+  will-change: transform, opacity;
+
+  @media (max-width: 768px) {
+    transform: none;
+    text-align: center;
+    align-self: center;
+    font-size: var(--mobile-header-title-font);
+  }
 `;
 
 const WhoBio = styled.p`
@@ -250,6 +283,16 @@ const WhoPhotoWrap = styled.div`
   z-index: 1;
   @media (max-width: 768px) {
     flex: unset;
+    width: 100%;
+  }
+`;
+
+const ButtonWrap = styled.div`
+  display: flex;
+  justify-content: flex-start;
+
+  @media (max-width: 768px) {
+    justify-content: center;
     width: 100%;
   }
 `;

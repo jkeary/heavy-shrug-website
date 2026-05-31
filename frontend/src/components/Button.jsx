@@ -32,11 +32,11 @@ const SubmitButton = styled.button`
   cursor: pointer;
   align-self: flex-start;
   transition:
-    background-color 0.2s,
-    color 0.2s,
-    border-color 0.2s,
-    transform 0.15s,
-    box-shadow 0.15s;
+    background-color 0.8s,
+    color 0.8s,
+    border-color 0.8s,
+    transform 0.75s,
+    box-shadow 0.75s;
 
   &:hover {
     background-color: #0d1a07;
@@ -71,11 +71,11 @@ const sharedButtonStyles = css`
   cursor: pointer;
   text-decoration: none;
   transition:
-    background-color 0.2s,
-    color 0.2s,
-    border-color 0.2s,
-    transform 0.15s,
-    box-shadow 0.15s;
+    background-color 0.8s,
+    color 0.8s,
+    border-color 0.8s,
+    transform 0.75s,
+    box-shadow 0.75s;
   display: inline-block;
 
   &:hover {

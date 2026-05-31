@@ -1,19 +1,56 @@
-import styled from 'styled-components'
-
-import { links } from '../variables'
-import MyButton from './Button'
+import styled from "styled-components";
+import { useEffect, useRef } from "react";
+import { links } from "../variables";
+import MyButton from "./Button";
 
 export default function SocialLinks() {
+  const titleRef = useRef(null);
+
+  useEffect(() => {
+    const heading = titleRef.current;
+    if (!heading) return;
+
+    const mobileFont = getComputedStyle(document.documentElement).getPropertyValue('--mobile-header-title-font') || '1.8rem';
+
+    if (window.innerWidth <= 768) {
+      heading.style.opacity = "1";
+      heading.style.fontSize = mobileFont;
+      return;
+    }
+
+    // start small on desktop so it can scale up
+    heading.style.fontSize = "0px";
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const ratio = entry.intersectionRatio;
+        const fadeStartRatio = 0.55;
+        const progress = ratio >= fadeStartRatio ? 1 : ratio / fadeStartRatio;
+        heading.style.opacity = `${Math.min(1, Math.max(0, progress))}`;
+        const maxPx = 48; // desktop max (3rem)
+        heading.style.fontSize = `${Math.min(maxPx, Math.max(0, progress * maxPx))}px`;
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: Array.from({ length: 21 }, (_, i) => i / 20),
+      }
+    );
+
+    observer.observe(heading);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <Section>
-      <Heading>Crunch those likes, fam</Heading>
+      <Heading ref={titleRef}>Crunch those likes, fam</Heading>
       <Grid>
         {links.map(({ name, url }) => (
           <MyButton key={name} url={url} name={name} />
         ))}
       </Grid>
     </Section>
-  )
+  );
 }
 
 const Section = styled.section`
@@ -24,52 +61,29 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 
 const Heading = styled.h2`
   font-family: var(--font-heading);
-  font-size: 2.5rem;
+  font-size: 3rem;
   color: var(--orange);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 3.3rem;
   text-align: center;
   align-self: center;
+  opacity: 0;
+  transition: opacity 1s ease-out, font-size 1s ease-out;
 
   @media (max-width: 640px) {
-    font-size: 1.8rem;
+    font-size: var(--mobile-header-title-font);
     margin-bottom: 2rem;
   }
-`
+`;
 
 const Grid = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   justify-content: center;
-`
-
-// const SocialButton = styled.a`
-//   font-family: var(--font-heading);
-//   font-size: 1.1rem;
-//   letter-spacing: 0.1em;
-//   text-transform: uppercase;
-//   padding: 0.65rem 1.5rem;
-//   background-color: var(--orange);
-//   color: #0d1a07;
-//   border: 2px solid var(--orange);
-//   border-radius: 15px;
-//   cursor: pointer;
-//   text-decoration: none;
-//   transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.15s;
-//   display: inline-block;
-
-//   &:hover {
-//     background-color: #0d1a07;
-//     color: var(--orange);
-//     border-color: var(--orange);
-//     text-decoration: none;
-//     transform: translateY(-2px) scale(1.03);
-//     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
-//   }
-// `
+`;

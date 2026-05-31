@@ -24,6 +24,10 @@
   font-display: swap;
 }
 
+:root {
+  --mobile-header-title-font: 1.8rem;
+}
+
 body {
   background-image: url('./assets/images/camo2.webp');
   background-repeat: repeat;
