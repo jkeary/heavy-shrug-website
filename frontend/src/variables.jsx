@@ -20,7 +20,7 @@ export const shortBio = `Philly’s Heavy Shrug crank out a special brand of noi
 
 Lead songwriter/singer/guitarist James Keary’s lyrics intertwine the personal and political, exploring the anger, anxiety and isolation that come with being forced to feed the fires of capitalism while the world burns down around you. Keary’s dynamic vocal range–turning on a dime from gentle to sneering to howling—and the band’s hard-hitting and expansive arrangements have earned them a reputation for thrilling live sets in Philly’s booming indie/DIY scene.
 
-Heavy Shrug will drop their anticipated debut LP, Viscera, on September twenty-five via <a href='https://badcattrecords.com/' target='_blank' rel='noopener noreferrer'>Bad Catt Records</a>.`
+Heavy Shrug will drop their anticipated debut LP, Viscera, on September Nineteenth via <a href='https://badcattrecords.com/' target='_blank' rel='noopener noreferrer'>Bad Catt Records</a>.`
 
 export const longBio = `Philly's Heavy Shrug crank out a special brand of noisy, eclectic rock that's as hard to categorize as it is to get out of your head. Blending the dark melodicism of nineties alt-rock and grunge with the intensity and chaos of post-hardcore and lilting, atmospheric touches that nod to shoegaze and dream pop—think Nirvana, Pixies, and gloom-rock contemporaries Pile — Heavy Shrug's expansive and hard-hitting songs are filled with twists, turns, and hooks that will make you want to shake a fist and shake your body at the same time.
 
@@ -30,7 +30,7 @@ Heavy Shrug grew out of the DC band Frend, which featured the core duo of singer
 
 Keary's lyrics process the present-day social and political climate through the lens of the personal—exploring the anger, anxiety and isolation that come with being forced to feed the fires of capitalism while the world burns down around you—and his dynamic vocal range drives the point home, turning on a dime from gentle to sneering to howling.
 
-Hardworking staples of Philly's indie rock scene, Heavy Shrug have earned a reputation for their high-voltage live sets, and are set to release their much-anticipated debut LP, "Viscera," on September twenty fifth via <a href='https://badcattrecords.com/' target='_blank' rel='noopener noreferrer'>Bad Catt Records</a>, with lead single "Stuck in a Breakdown" dropping on July twenty third.`
+Hardworking staples of Philly's indie rock scene, Heavy Shrug have earned a reputation for their high-voltage live sets, and are set to release their much-anticipated debut LP, "Viscera," on September Nineteenth via <a href='https://badcattrecords.com/' target='_blank' rel='noopener noreferrer'>Bad Catt Records</a>, with lead single "Stuck in a Breakdown" dropping on July Ninth.`
 
 // socials
 export const links = [
