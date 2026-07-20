@@ -1,3 +1,4 @@
 {
+  "redirects": [{ "source": "/epk", "destination": "/EPK.pdf", "permanent": false }],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
