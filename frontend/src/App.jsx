@@ -8,6 +8,7 @@ import MusicPlayer from "./components/MusicPlayer";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Shows from "./pages/Shows";
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -29,6 +30,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/shows" element={<Shows />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
         <Footer />

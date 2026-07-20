@@ -21,6 +21,12 @@ export default function Navbar() {
           About
         </StyledNavLink>
         <StyledNavLink
+          to="/shows"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          Shows
+        </StyledNavLink>
+        <StyledNavLink
           to="/contact"
           className={({ isActive }) => (isActive ? "active" : "")}
         >
