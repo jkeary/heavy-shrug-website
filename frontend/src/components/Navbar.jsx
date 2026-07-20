@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { logoImg } from "../variables";
 import styled from "styled-components";
 
 export default function Navbar() {
@@ -6,8 +7,10 @@ export default function Navbar() {
     <Nav>
       <Brand>
         <NavLink to="/">
-          <div>Heavy</div>
-          <div>Shrug</div>
+          <LogoImg
+            src={logoImg}
+            alt="Heavy Shrug Logo"
+          />
         </NavLink>
       </Brand>
       <Links>
@@ -27,6 +30,22 @@ export default function Navbar() {
     </Nav>
   );
 }
+
+const LogoImg = styled.img`
+  height: 65px;
+  width: 100px;
+  margin-top: 5px;
+  @media (max-width: 640px) {
+    height: 50px;
+    width: 75px;
+  }
+  transition: filter 0.3s ease; 
+  &:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+    
+  }
+`;
 
 const Nav = styled.nav`
   display: flex;

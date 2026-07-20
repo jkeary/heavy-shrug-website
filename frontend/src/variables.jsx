@@ -5,6 +5,7 @@ export { default as heroPhoto } from './assets/images/DSC_8736.webp';
 export { default as whatPhoto } from './assets/images/Heavy-Shrug_8_BW.webp';
 export { default as aboutPhoto } from './assets/images/about.webp';
 export { default as contactPhoto } from './assets/images/hero.webp';
+export { default as logoImg } from './assets/images/HeavyShrug_Logo_Stacked_orange.webp';
 
 
 // background
