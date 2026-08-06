@@ -14,6 +14,9 @@ export default function Navbar() {
         </NavLink>
       </Brand>
       <Links>
+        <ExternalLink href="https://heavyshrug.bandcamp.com" target="_blank" rel="noopener noreferrer">
+          Listen
+        </ExternalLink>
         <StyledNavLink
           to="/about"
           className={({ isActive }) => (isActive ? "active" : "")}
@@ -89,6 +92,23 @@ const Brand = styled.div`
 const Links = styled.div`
   display: flex;
   gap: 2rem;
+`;
+
+const ExternalLink = styled.a`
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  border-bottom: 3px solid transparent;
+  transition:
+    color 0.8s,
+    border-color 0.8s;
+  text-shadow:
+    3px 3px 0 rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(255, 107, 0, 0.4);
 `;
 
 const StyledNavLink = styled(NavLink)`

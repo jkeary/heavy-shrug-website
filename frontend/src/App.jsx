@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import MusicPlayer from "./components/MusicPlayer";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -35,7 +34,6 @@ function App() {
         </Routes>
         <Footer />
       </AppWrapper>
-      <MusicPlayer />
     </Router>
   );
 }
