@@ -4,15 +4,14 @@ import styled from "styled-components";
 export default function Shows() {
   useEffect(() => {
     const scriptId = "bit-widget-script";
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement("script");
-      script.id = scriptId;
-      script.src = "https://widgetv3.bandsintown.com/main.min.js";
-      script.charset = "utf-8";
-      document.head.appendChild(script);
-    } else if (window.BIT) {
-      window.BIT.renderWidget();
-    }
+    const existing = document.getElementById(scriptId);
+    if (existing) existing.remove();
+
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.src = "https://widgetv3.bandsintown.com/main.min.js";
+    script.charset = "utf-8";
+    document.head.appendChild(script);
   }, []);
 
   return (
